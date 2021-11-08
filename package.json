@@ -1,0 +1,21 @@
+{
+  "name": "chipax",
+  "version": "1.0.0",
+  "description": "R&M Challenge",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node ./src/index.ts",
+    "test": "jest run"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tslint": "^5.12.1",
+    "typescript": "^3.3.3"
+  },
+  "dependencies": {
+    "axios": "^0.24.0",
+    "jest": "^27.3.1",
+    "ts-node": "^10.4.0"
+  }
+}
