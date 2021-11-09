@@ -1,3 +1,8 @@
+export interface Origin {
+  name: string;
+  link: string;
+}
+
 export interface Location {
   id: number;
   name: string;
@@ -15,10 +20,7 @@ export interface Character {
   species: string;
   type: string;
   gender: "male" | "female" | "genderless" | "unknown";
-  origin: {
-    name: string;
-    link: string;
-  };
+  origin: Origin;
   image: string;
   url: string;
   created: string;
@@ -46,13 +48,27 @@ export interface RMApiResponse<T> {
   results: T[];
 }
 
-export interface CharCounterAnswer {
+export interface Answer<T> {
   exercise_name: string;
   time: string;
   in_time: boolean;
-  results: {
+  results: T;
+}
+
+export type CharCounterAnswer = Answer<
+  {
     char: string;
     count: number;
     resource: string;
-  }[];
-}
+  }[]
+>;
+
+export type CharacterLocationAnswer = Answer<
+  {
+    name: string;
+    episode: number;
+    locations: string[];
+  }[]
+>;
+
+export type CharacterOriginInfo = Record<string, Origin>;

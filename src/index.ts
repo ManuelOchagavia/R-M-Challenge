@@ -1,13 +1,18 @@
 import charCounter from "./functions/charCounter";
-import { getTimeStats } from "./functions/utils";
-import { CharCounterAnswer } from "./interfaces/d";
+import episodeLocations from "./functions/episodeLocations";
+import { getTimeStats, writeJson } from "./functions/utils";
+import { CharacterLocationAnswer, CharCounterAnswer } from "./interfaces/d";
 
 const exerciseWrapper = async () => {
-  const start = Date.now();
-  const answer = (await charCounter()) as CharCounterAnswer;
-  const finish = Date.now();
-  getTimeStats(answer, start, finish);
-  console.log(answer);
+  const startCounter = Date.now();
+  const answerCounter = (await charCounter()) as CharCounterAnswer;
+  const finishCounter = Date.now();
+  const startOrigin = Date.now();
+  const answerOrigin = (await episodeLocations()) as CharacterLocationAnswer;
+  const finishOrigin = Date.now();
+  getTimeStats(answerCounter, startCounter, finishCounter);
+  getTimeStats(answerOrigin, startOrigin, finishOrigin);
+  writeJson(JSON.stringify([answerCounter, answerOrigin], null, 2));
 };
 
 exerciseWrapper();

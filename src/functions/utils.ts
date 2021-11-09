@@ -1,5 +1,15 @@
+import fs from "fs";
+
 import axiosInstance from "../api";
-import { Character, Episode, Location, RMApiResponse } from "../interfaces/d";
+import { charactersRoute } from "../api/routes";
+import {
+  Character,
+  CharacterOriginInfo,
+  Episode,
+  Location,
+  Origin,
+  RMApiResponse,
+} from "../interfaces/d";
 
 export const getAllInfo = async (route: string) => {
   const answerAux = [];
@@ -12,7 +22,10 @@ export const getAllInfo = async (route: string) => {
   const results = (await Promise.all(answerAux))?.map(
     (elem) => elem?.data?.results
   );
-  return [firstAnswer, ...results.reduce((acc, elem) => [...acc, ...elem], [])];
+  return [
+    ...firstAnswer,
+    ...results.reduce((acc, elem) => [...acc, ...elem], []),
+  ];
 };
 
 export const getMatchesNumber = (letter: string, elements: any[]): number =>
@@ -24,11 +37,50 @@ export const getMatchesNumber = (letter: string, elements: any[]): number =>
   }, 0);
 
 export const getTimeStats = (result, start, finish) => {
-  const delta = (finish - start) / 10e3;
-  const seconds = Math.trunc(delta);
-  const milli = delta % 1;
-  result.time = `${seconds ? `${seconds}s` : ""}${
-    milli ? ` ${milli * 10e2}ms` : ""
-  }`;
-  result.in_time = delta < 3;
+  const delta = finish - start;
+  const seconds = Math.trunc(delta / 1000);
+  const milli = delta % 1000;
+  result.time = `${seconds ? `${seconds}s` : ""}${milli ? ` ${milli}ms` : ""}`;
+  result.in_time = delta < 3000;
+};
+
+export const getDistinctCharacters = (episodes: Episode[]) => {
+  const distinctCharacters = {};
+  episodes?.forEach((elem) =>
+    elem?.characters?.forEach((item) => {
+      if (!distinctCharacters[item]) distinctCharacters[item] = true;
+    })
+  );
+  return Object.keys(distinctCharacters);
+};
+
+export const getCharactersOrigin = async () => {
+  const answerAux = [];
+  const answer: Character[] = await getAllInfo(charactersRoute());
+  const originsByCharacter: CharacterOriginInfo = {};
+  answer.forEach((elem) => (originsByCharacter[elem.url] = elem.origin));
+  return originsByCharacter;
+};
+
+export const buildEpisodeWithCharacterInfo = (
+  episodes: Episode[],
+  originsByCharacter: CharacterOriginInfo
+) => {
+  const result = [];
+  episodes?.forEach((elem) => {
+    const { episode, characters, name } = elem ?? ({} as Episode);
+    result.push({
+      name,
+      episode,
+      locations: characters?.map((elem) => originsByCharacter[elem]?.name),
+    });
+  });
+  return result;
+};
+
+export const writeJson = (data) => {
+  fs.writeFile("response.json", data, function (err) {
+    if (err) return console.log(err);
+    console.log(`Saved at > response.json`);
+  });
 };
