@@ -1,6 +1,6 @@
 export interface Origin {
   name: string;
-  link: string;
+  url: string;
 }
 
 export interface Location {
@@ -21,6 +21,8 @@ export interface Character {
   type: string;
   gender: "male" | "female" | "genderless" | "unknown";
   origin: Origin;
+  location: Origin;
+  episode: string[];
   image: string;
   url: string;
   created: string;

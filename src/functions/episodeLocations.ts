@@ -1,4 +1,4 @@
-import { episodesRoute } from "../api/routes";
+import { charactersRoute, episodesRoute } from "../api/routes";
 import { CharacterOriginInfo, Episode } from "../interfaces/d";
 import {
   buildEpisodeWithCharacterInfo,

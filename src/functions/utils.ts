@@ -7,7 +7,6 @@ import {
   CharacterOriginInfo,
   Episode,
   Location,
-  Origin,
   RMApiResponse,
 } from "../interfaces/d";
 
@@ -55,7 +54,6 @@ export const getDistinctCharacters = (episodes: Episode[]) => {
 };
 
 export const getCharactersOrigin = async () => {
-  const answerAux = [];
   const answer: Character[] = await getAllInfo(charactersRoute());
   const originsByCharacter: CharacterOriginInfo = {};
   answer.forEach((elem) => (originsByCharacter[elem.url] = elem.origin));
@@ -84,3 +82,8 @@ export const writeJson = (data) => {
     console.log(`Saved at > response.json`);
   });
 };
+
+// Testing utils
+
+export const randomPick = (list: any[]): any =>
+  list[Math.floor(Math.random() * list.length)];
