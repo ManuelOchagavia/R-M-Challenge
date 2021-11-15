@@ -7,7 +7,7 @@ import {
   mockGetLocation,
 } from "../__mocks__/mocks";
 
-jest.mock("../../src/api");
+jest.mock("../src/api");
 const mockedAxios = axiosInstance as jest.Mocked<any>;
 
 it("Should get origin locations of episode's characters", async () => {

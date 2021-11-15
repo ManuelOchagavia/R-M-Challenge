@@ -14,7 +14,7 @@ import {
   mockGetLocation,
 } from "../__mocks__/mocks";
 
-jest.mock("../../src/api");
+jest.mock("../src/api");
 const mockedAxios = axiosInstance as jest.Mocked<any>;
 
 describe("Utils tests", () => {
