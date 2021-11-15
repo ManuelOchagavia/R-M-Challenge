@@ -1,10 +1,10 @@
-import axiosInstance from "../../src/api";
-import episodeLocations from "../../src/functions/episodeLocations";
+import axiosInstance from "../src/api";
+import episodeLocations from "../src/functions/episodeLocations";
 import {
   mockApiResponse,
   mockGetCharacter,
   mockGetEpisode,
-} from "../../__mocks__/mocks";
+} from "../__mocks__/mocks";
 
 jest.mock("../../src/api");
 const mockedAxios = axiosInstance as jest.Mocked<any>;

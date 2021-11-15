@@ -1,4 +1,4 @@
-import axiosInstance from "../../src/api";
+import axiosInstance from "../src/api";
 import {
   buildEpisodeWithCharacterInfo,
   getAllInfo,
@@ -6,13 +6,13 @@ import {
   getDistinctCharacters,
   getMatchesNumber,
   getTimeStats,
-} from "../../src/functions/utils";
+} from "../src/functions/utils";
 import {
   mockApiResponse,
   mockGetCharacter,
   mockGetEpisode,
   mockGetLocation,
-} from "../../__mocks__/mocks";
+} from "../__mocks__/mocks";
 
 jest.mock("../../src/api");
 const mockedAxios = axiosInstance as jest.Mocked<any>;
